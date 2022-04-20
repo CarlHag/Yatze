@@ -5633,6 +5633,8 @@ MonoBehaviour:
   endScreen: {fileID: 1934804513}
   rerollButton: {fileID: 2003962027}
   finalScoreSubmitButton: {fileID: 476672513}
+  menuButton: {fileID: 0}
+  leaderboardButton: {fileID: 0}
   dieObj:
   - {fileID: 2103571327}
   - {fileID: 1434911103}
@@ -10256,7 +10258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1934804514
 RectTransform:
   m_ObjectHideFlags: 0

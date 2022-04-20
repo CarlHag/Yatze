@@ -52,7 +52,24 @@ public class FirebaseScript : MonoBehaviour
             leaderboardReference.Child(i.ToString()).SetRawJsonValueAsync(json);
         }
     }
+    public void LoadLeaderboard(LeaderboardCallback leaderboardCallback)
+    {
+        StartCoroutine(LoadLeaderboardCoroutine(leaderboardCallback));
+    }
+    IEnumerator LoadLeaderboardCoroutine(LeaderboardCallback leaderboardCallback)
+    {
+        var query = leaderboardReference.GetValueAsync();
+        yield return new WaitUntil(() => query.IsCompleted);
 
+        DataSnapshot[] snapshots = query.Result.Children.ToArray();
+        List<LeaderboardEntry> entries = new List<LeaderboardEntry>();
+        for(int i = 0; i>10; i++)
+        {
+            entries.Add(JsonUtility.FromJson<LeaderboardEntry>(snapshots[i].GetRawJsonValue()));
+        }
+        entries.Sort((x, y) => x.score.CompareTo(y.score));
+        leaderboardCallback(entries);
+    }
     public struct LeaderboardEntry
     {
         public string name;
