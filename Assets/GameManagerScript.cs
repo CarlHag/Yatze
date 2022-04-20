@@ -7,11 +7,13 @@ using TMPro;
 public class GameManagerScript : MonoBehaviour
 {
     int roundCounter = 13;
-    [SerializeField] TMP_Text rerollText, upperSumText, lowerSumText, grandTotalText, bonusText, yourTotalText, opponentTotalText;
+    [SerializeField] TMP_Text rerollText, upperSumText, lowerSumText, grandTotalText, finalScoreText, bonusText;
     [SerializeField] GameObject endScreen;
-    [SerializeField] Button rerollButton;
+    [SerializeField] Button rerollButton, finalScoreSubmitButton, menuButton, leaderboardButton;
     [SerializeField] GameObject[] dieObj;
     [SerializeField] Sprite[] dieFaceInput;
+    [SerializeField] FirebaseScript firebaseScript;
+    string name;
     int[] upperSectionScores = new int[6];
     int _rolls = 3;
     int rolls
@@ -68,6 +70,10 @@ public class GameManagerScript : MonoBehaviour
             else
                 bonusText.text = "Bonus: 0";
         }
+    }
+    public int GetGrandTotal()
+    {
+        return grandTotal;
     }
     [SerializeField] GameObject aces, twos, threes, fours, fives, sixes, threeOfAKind, fourOfAKind, yahtzee, chance, smallStr, longStr, fullHouse;
     Dictionary<GameObject, Category> categories = new Dictionary<GameObject, Category>();
@@ -127,18 +133,30 @@ public class GameManagerScript : MonoBehaviour
             this.isUpper = isUpper;
         }
     }
+    public void SubmitFinalScore()
+    {
+        firebaseScript.SubmitFinalScore(name, grandTotal);
+        finalScoreSubmitButton.interactable = false;
+        leaderboardButton.interactable = false;
+        menuButton.interactable = false;
+    }
+    public void SetName(string name)
+    {
+        this.name = name;
+        finalScoreSubmitButton.interactable = name != "";
+    }
     void RoundEnd()
     {
         endScreen.SetActive(true);
         rerollButton.interactable = false;
-        yourTotalText.text = string.Format("your score: {0}", grandTotal);
+        finalScoreText.text = string.Format("Score: {0}", grandTotal);
     }
     void Roll(bool rollAll = false)
     {
         for (int i = 0; i < 5; i++)
         {
             if (dice[i].selected || rollAll)
-                dice[i].value = Random.Range(1, 6);
+                dice[i].value = Random.Range(1, 7);
             dice[i].selected = false;
         }
         for (int i = 0; i < 5; i++)

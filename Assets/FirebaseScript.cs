@@ -3,98 +3,99 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class FirebaseScript : MonoBehaviour
 {
-    FirebaseAuth auth;
-
+    
+    [SerializeField] bool willResetLeaderboard;
+    FirebaseDatabase database;
+    DatabaseReference leaderboardReference;
+    DatabaseReference root;
+    const string LEADERBOARD = "Leaderboard";
+    public delegate void LeaderboardCallback(List<LeaderboardEntry> entries);
     void Start()
     {
-        //DontDestroyOnLoad(gameObject);
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Exception != null)
                 Debug.LogError(task.Exception);
 
-            auth = FirebaseAuth.DefaultInstance;
+            database = FirebaseDatabase.DefaultInstance;
         });
+        leaderboardReference = database.RootReference.Child(LEADERBOARD);
+        root = database.RootReference;
+        
+        if (willResetLeaderboard)
+            ResetLeaderboard();
+            
     }
-
-    private void Update()
+    class BoolClass
     {
-        if (Input.GetKeyDown(KeyCode.A))
-            AnonymousSignIn();
-
-        if (Input.GetKeyDown(KeyCode.D))
-            DataTest(auth.CurrentUser.UserId, Random.Range(0, 100).ToString());
+        public bool isTrue = false;
     }
-
-    private void AnonymousSignIn()
+    class DataSnapshotClassf
     {
-        auth.SignInAnonymouslyAsync().ContinueWithOnMainThread(task => {
-            if (task.Exception != null)
-            {
-                Debug.LogWarning(task.Exception);
-            }
-            else
-            {
-                FirebaseUser newUser = task.Result;
-                Debug.LogFormat("User signed in successfully: {0} ({1})",
-                    newUser.DisplayName, newUser.UserId);
-            }
-        });
+        public DataSnapshot dataSnapshot;
     }
-
-    private void DataTest(string userID, string data)
+    
+    private void ResetLeaderboard()
     {
-        Debug.Log("Trying to write data...");
-        var db = FirebaseDatabase.DefaultInstance;
-        db.RootReference.Child("users").Child(userID).SetValueAsync(data).ContinueWithOnMainThread(task =>
+        LeaderboardEntry entry = new LeaderboardEntry("Empty", 0);
+        string json = JsonUtility.ToJson(entry);
+        for(int i = 0; i < 10; i++)
         {
-            if (task.Exception != null)
-                Debug.LogWarning(task.Exception);
-            else
-                Debug.Log("DataTestWrite: Complete");
-        });
-    }
-    private void RegisterNewUser(string email, string password)
-    {
-        Debug.Log("Starting Registration");
-        auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
-        {
-            if (task.Exception != null)
-            {
-                Debug.LogWarning(task.Exception);
-            }
-            else
-            {
-                FirebaseUser newUser = task.Result;
-                Debug.LogFormat("User Registerd: {0} ({1})",
-                  newUser.DisplayName, newUser.UserId);
-            }
-        });
+            leaderboardReference.Child(i.ToString()).SetRawJsonValueAsync(json);
+        }
     }
 
-    private void SignIn(string email, string password)
+    public struct LeaderboardEntry
     {
-        auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
+        public string name;
+        public int score;
+        public LeaderboardEntry(string name, int score)
         {
-            if (task.Exception != null)
-            {
-                Debug.LogWarning(task.Exception);
-            }
-            else
-            {
-                FirebaseUser newUser = task.Result;
-                Debug.LogFormat("User signed in successfully: {0} ({1})",
-                  newUser.DisplayName, newUser.UserId);
-            }
-        });
+            this.name = name;
+            this.score = score;
+        }
+    }
+    
+    public void SubmitFinalScore(string name, int score)
+    {
+        LeaderboardEntry entry = new LeaderboardEntry(name, score);
+        StartCoroutine(SubmitFinalScoreCoroutine(entry));
     }
 
-    private void SignOut()
+    IEnumerator SubmitFinalScoreCoroutine(LeaderboardEntry entry)
     {
-        auth.SignOut();
-        Debug.Log("User signed out");
+        
+        var query = leaderboardReference.GetValueAsync();
+        yield return new WaitUntil(() => query.IsCompleted);
+
+        DataSnapshot[] snapshots = query.Result.Children.ToArray();
+        List<LeaderboardEntry> entries = new List<LeaderboardEntry>();
+        for(int i = 0; i < 10; i++)
+        {
+            entries.Add(JsonUtility.FromJson<LeaderboardEntry>(snapshots[i].GetRawJsonValue()));
+        }
+        entries.Add(entry);
+        entries.Sort((x, y) => x.score.CompareTo(y.score));
+        entries.RemoveAt(10);
+        int taskCounter = 1;
+        for(int i = 0; i<10; i++)
+        {
+            string json = JsonUtility.ToJson(entries[i]);
+            leaderboardReference.SetRawJsonValueAsync(json).ContinueWithOnMainThread(task =>
+            {
+                taskCounter++;
+            });
+        }
+        yield return new WaitUntil(() => taskCounter == 10);
+
+        SceneManager.LoadScene(LEADERBOARD);
     }
 }
