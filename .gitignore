@@ -35,3 +35,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Custom
+FirebaseCppApp-8_8_0.so
+google-services.json

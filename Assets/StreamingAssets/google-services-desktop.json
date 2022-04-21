@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "993586635082",
-    "firebase_url": "https://yahtzee-501da-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "yahtzee-501da",
-    "storage_bucket": "yahtzee-501da.appspot.com"
+    "project_number": "19855820815",
+    "firebase_url": "https://yahtze3-35051-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "yahtze3-35051",
+    "storage_bucket": "yahtze3-35051.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:993586635082:android:eda47500fbbfb7d36a61b3",
+        "mobilesdk_app_id": "1:19855820815:android:87b2cfd814d941d5033b7a",
         "android_client_info": {
           "package_name": "com.CarlHagelin.Yatze"
         }
       },
       "oauth_client": [
         {
-          "client_id": "993586635082-4e4risq5rh3oh3b6fpjc261m4gvqoo01.apps.googleusercontent.com",
+          "client_id": "19855820815-rdu9j79d4e08cecfija96ru6s9ljcsjh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDbUn4kHhDQ4peVLmiCWUcSBbsj5KBdv4s"
+          "current_key": "AIzaSyBnTwLeJDl8dCXihM6HHeCbPuBWC783GFU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "993586635082-4e4risq5rh3oh3b6fpjc261m4gvqoo01.apps.googleusercontent.com",
+              "client_id": "19855820815-rdu9j79d4e08cecfija96ru6s9ljcsjh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
