@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "RFCR70Q9J1V",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "RFCR70Q9J1V",
+        "name": "com.CarlHagelin.Yatze",
+        "processId": 12774,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -12,6 +12,24 @@
             "deviceId": "RFCR70Q9J1V",
             "name": "com.CarlHagelin.Yatze",
             "processId": 5602,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCR70Q9J1V",
+            "name": "com.CarlHagelin.Yatze",
+            "processId": 23167,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCR70Q9J1V",
+            "name": "com.CarlHagelin.Yatze",
+            "processId": 12773,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCR70Q9J1V",
+            "name": "com.CarlHagelin.Yatze",
+            "processId": 12774,
             "exited": false
         }
     ],

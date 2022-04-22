@@ -235,7 +235,7 @@ public class GameManagerScript : MonoBehaviour
         for (int i = 0; i < 6; i++)
             values[i] = 0;
         foreach (Die die in dice)
-            values[die.value]++;
+            values[die.value-1]++;
         for (int i = 0; i < 6; i++)
             if (values[i] > 2)
             {
@@ -252,7 +252,7 @@ public class GameManagerScript : MonoBehaviour
         for (int i = 0; i < 6; i++)
             values[i] = 0;
         foreach (Die die in dice)
-            values[die.value]++;
+            values[die.value-1]++;
         for (int i = 0; i < 6; i++)
             if (values[i] > 3)
             {
@@ -271,7 +271,7 @@ public class GameManagerScript : MonoBehaviour
         for (int i = 0; i < 6; i++)
             values[i] = 0;
         foreach (Die die in dice)
-            values[die.value]++;
+            values[die.value-1]++;
         for (int i = 0; i < 6; i++)
             if (values[i] == 3)
             {
@@ -296,7 +296,7 @@ public class GameManagerScript : MonoBehaviour
         for (int i = 0; i < 6; i++)
             values[i] = 0;
         foreach (Die die in dice)
-            values[die.value]++;
+            values[die.value-1]++;
         bool success = false;
         for (int i = 0; i < 3; i++)
         {
@@ -322,7 +322,7 @@ public class GameManagerScript : MonoBehaviour
         for (int i = 0; i < 6; i++)
             values[i] = 0;
         foreach (Die die in dice)
-            values[die.value]++;
+            values[die.value-1]++;
         bool success = false;
         for (int i = 0; i < 2; i++)
         {
@@ -348,7 +348,7 @@ public class GameManagerScript : MonoBehaviour
         for (int i = 0; i < 6; i++)
             values[i] = 0;
         foreach (Die die in dice)
-            values[die.value]++;
+            values[die.value-1]++;
         bool success = false;
         for (int i = 0; i < 6; i++)
             if (values[i] == 5)
