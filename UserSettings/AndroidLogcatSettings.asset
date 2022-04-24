@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "RFCR70Q9J1V",
         "name": "com.CarlHagelin.Yatze",
-        "processId": 4135,
+        "processId": 29534,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -36,6 +36,24 @@
             "deviceId": "RFCR70Q9J1V",
             "name": "com.CarlHagelin.Yatze",
             "processId": 4135,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCR70Q9J1V",
+            "name": "com.CarlHagelin.Yatze",
+            "processId": 23938,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCR70Q9J1V",
+            "name": "com.CarlHagelin.Yatze",
+            "processId": 28927,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCR70Q9J1V",
+            "name": "com.CarlHagelin.Yatze",
+            "processId": 29534,
             "exited": false
         }
     ],

@@ -16,7 +16,6 @@ public class FirebaseScript : MonoBehaviour
     [SerializeField] bool willResetLeaderboard;
     FirebaseDatabase database;
     DatabaseReference leaderboardReference;
-    DatabaseReference root;
     const string LEADERBOARD = "Leaderboard";
     public delegate void LeaderboardCallback(List<LeaderboardEntry> entries);
     void Start()
@@ -27,10 +26,6 @@ public class FirebaseScript : MonoBehaviour
                 Debug.Log(task.Exception);
 
             database = FirebaseDatabase.DefaultInstance;
-            root = database.RootReference;
-            
-            
-            
             leaderboardReference = database.RootReference.Child(LEADERBOARD);
             //leaderboardReference.SetValueAsync("leaderboardTest");
 
@@ -110,7 +105,7 @@ public class FirebaseScript : MonoBehaviour
         entries.Sort((x, y) => x.score.CompareTo(y.score));
         entries.Reverse();
         entries.RemoveAt(10);
-        int taskCounter = 1;
+        int taskCounter = 0;
         for(int i = 0; i<10; i++)
         {
             string json = JsonUtility.ToJson(entries[i]);

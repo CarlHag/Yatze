@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -139,6 +140,8 @@ public class GameManagerScript : MonoBehaviour
         firebaseScript.SubmitFinalScore(name, grandTotal);
         finalScoreSubmitButton.interactable = false;
         
+
+
     }
     public void SetName(string name)
     {
@@ -150,8 +153,10 @@ public class GameManagerScript : MonoBehaviour
         endScreen.SetActive(true);
         rerollButton.interactable = false;
         finalScoreText.text = string.Format("Score: {0}", grandTotal);
-        foreach (Button button in footerButtons)
-            button.interactable = false;
+        foreach (Button b in footerButtons)
+            b.interactable = false;
+
+
     }
     void Roll(bool rollAll = false)
     {
