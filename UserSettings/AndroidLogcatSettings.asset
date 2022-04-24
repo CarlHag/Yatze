@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "RFCR70Q9J1V",
         "name": "com.CarlHagelin.Yatze",
-        "processId": 12774,
+        "processId": 4135,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -30,6 +30,12 @@
             "deviceId": "RFCR70Q9J1V",
             "name": "com.CarlHagelin.Yatze",
             "processId": 12774,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCR70Q9J1V",
+            "name": "com.CarlHagelin.Yatze",
+            "processId": 4135,
             "exited": false
         }
     ],

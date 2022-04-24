@@ -28,11 +28,11 @@ public class FirebaseScript : MonoBehaviour
 
             database = FirebaseDatabase.DefaultInstance;
             root = database.RootReference;
-            root.Child("test").SetValueAsync("test1");
+            
             
             
             leaderboardReference = database.RootReference.Child(LEADERBOARD);
-
+            //leaderboardReference.SetValueAsync("leaderboardTest");
 
 
             if (willResetLeaderboard)
@@ -47,12 +47,14 @@ public class FirebaseScript : MonoBehaviour
     
     private void ResetLeaderboard()
     {
+        
         LeaderboardEntry entry = new LeaderboardEntry("Empty", 0);
         string json = JsonUtility.ToJson(entry);
         for(int i = 0; i < 10; i++)
         {
             leaderboardReference.Child(i.ToString()).SetRawJsonValueAsync(json);
         }
+        Debug.Log("ResetLeaderboard");
     }
     public void LoadLeaderboard(LeaderboardCallback leaderboardCallback)
     {
@@ -98,18 +100,22 @@ public class FirebaseScript : MonoBehaviour
 
         DataSnapshot[] snapshots = query.Result.Children.ToArray();
         List<LeaderboardEntry> entries = new List<LeaderboardEntry>();
-        for(int i = 0; i < 10; i++)
+        Debug.Log($"snapshots.Length = {snapshots.Length}");
+        for (int i = 0; i < 10; i++)
         {
             entries.Add(JsonUtility.FromJson<LeaderboardEntry>(snapshots[i].GetRawJsonValue()));
         }
         entries.Add(entry);
+        
         entries.Sort((x, y) => x.score.CompareTo(y.score));
+        entries.Reverse();
         entries.RemoveAt(10);
         int taskCounter = 1;
         for(int i = 0; i<10; i++)
         {
             string json = JsonUtility.ToJson(entries[i]);
-            leaderboardReference.SetRawJsonValueAsync(json).ContinueWithOnMainThread(task =>
+            Debug.Log($"Entry {i} = {entries[i].name} {entries[i].score}");
+            leaderboardReference.Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWithOnMainThread(task =>
             {
                 taskCounter++;
             });

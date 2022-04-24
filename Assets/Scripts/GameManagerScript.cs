@@ -9,10 +9,11 @@ public class GameManagerScript : MonoBehaviour
     int roundCounter = 13;
     [SerializeField] TMP_Text rerollText, upperSumText, lowerSumText, grandTotalText, finalScoreText, bonusText;
     [SerializeField] GameObject endScreen;
-    [SerializeField] Button rerollButton, finalScoreSubmitButton, menuButton, leaderboardButton;
+    [SerializeField] Button rerollButton, finalScoreSubmitButton;
     [SerializeField] GameObject[] dieObj;
     [SerializeField] Sprite[] dieFaceInput;
     [SerializeField] FirebaseScript firebaseScript;
+    [SerializeField] Button[] footerButtons;
     string name;
     int[] upperSectionScores = new int[6];
     int _rolls = 3;
@@ -137,8 +138,7 @@ public class GameManagerScript : MonoBehaviour
     {
         firebaseScript.SubmitFinalScore(name, grandTotal);
         finalScoreSubmitButton.interactable = false;
-        leaderboardButton.interactable = false;
-        menuButton.interactable = false;
+        
     }
     public void SetName(string name)
     {
@@ -150,6 +150,8 @@ public class GameManagerScript : MonoBehaviour
         endScreen.SetActive(true);
         rerollButton.interactable = false;
         finalScoreText.text = string.Format("Score: {0}", grandTotal);
+        foreach (Button button in footerButtons)
+            button.interactable = false;
     }
     void Roll(bool rollAll = false)
     {
